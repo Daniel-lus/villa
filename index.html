@@ -1,0 +1,315 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+<title>Hasta la cima, siempre amigo</title>
+<meta name="description" content="Para Rodrigo Villanueva — te quiere, Chelo.">
+<meta name="robots" content="noindex,nofollow">
+
+<meta property="og:title" content="Hasta la cima, siempre amigo">
+<meta property="og:description" content="Para Rodrigo Villanueva — te quiere, Chelo.">
+<meta property="og:type" content="website">
+
+<link rel="preload" as="image" href="/frames/f_0001.webp" type="image/webp" fetchpriority="high">
+<link rel="preload" as="image" href="/frames/f_0289.webp" type="image/webp">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;1,300;1,400&display=swap" rel="stylesheet">
+
+<style>
+*{box-sizing:border-box;margin:0;padding:0}
+:root{
+  --bg:#0A0906;
+  --bg-2:#141008;
+  --text:#F5EFE3;
+  --gold:#D4B064;
+  --gold-glow:rgba(212,176,100,0.35);
+  --font:-apple-system,BlinkMacSystemFont,"SF Pro Display","Helvetica Neue",Arial,sans-serif;
+  --serif:"Cormorant Garamond","EB Garamond",Georgia,serif;
+  --vh:1vh;
+}
+html,body{background:#0A0906;color:var(--text);font-family:var(--font);-webkit-font-smoothing:antialiased;overflow-x:hidden;-webkit-tap-highlight-color:transparent}
+body{line-height:1.55;text-rendering:optimizeLegibility;-webkit-text-size-adjust:100%;overscroll-behavior-y:none}
+img{display:block;max-width:100%}
+
+/* Ambient background — warm gold-tinted sky */
+.bg-ambient{position:fixed;inset:0;pointer-events:none;z-index:0;
+  background:
+    radial-gradient(1100px 700px at 50% 15%, rgba(212,176,100,0.10), transparent 60%),
+    radial-gradient(900px 700px at 82% 85%, rgba(200,140,60,0.05), transparent 60%),
+    linear-gradient(180deg, #0A0906 0%, #141008 55%, #0A0906 100%);
+}
+.bg-ambient::after{content:'';position:absolute;inset:0;
+  background-image:radial-gradient(rgba(255,235,200,0.02) 1px, transparent 1px);
+  background-size:3px 3px;opacity:.55;mix-blend-mode:overlay;}
+
+/* Stage */
+.stage{position:relative;z-index:1}
+
+/* Leyenda */
+.leyenda{min-height:100vh;min-height:calc(var(--vh) * 100);min-height:100svh;
+  display:flex;flex-direction:column;justify-content:center;align-items:center;
+  padding:80px 32px 120px;text-align:center;position:relative;will-change:opacity}
+
+.eyebrow{font-size:11px;letter-spacing:.4em;text-transform:uppercase;
+  color:var(--gold);opacity:0;transform:translateY(10px);
+  animation:rise 1s .3s ease forwards;margin-bottom:56px;
+  display:inline-flex;align-items:center;gap:16px}
+.eyebrow::before,.eyebrow::after{content:'';display:block;width:34px;height:1px;background:linear-gradient(90deg,transparent,rgba(212,176,100,0.7),transparent)}
+
+.line{max-width:22ch;margin:0 auto;opacity:0;transform:translateY(28px);filter:blur(8px);
+  animation:reveal 1.4s cubic-bezier(.16,1,.3,1) forwards}
+.l1{font-family:var(--serif);font-weight:300;font-size:clamp(32px,5.2vw,66px);line-height:1.15;letter-spacing:-.005em;color:#F5EFE3;animation-delay:.55s}
+.l1 em{font-style:italic;color:var(--gold);text-shadow:0 0 42px var(--gold-glow)}
+.l2{margin-top:44px;font-family:var(--serif);font-style:italic;font-weight:300;font-size:clamp(20px,2.6vw,30px);color:rgba(245,239,227,0.82);max-width:34ch;animation-delay:1.15s}
+
+.divider{width:1px;height:56px;background:linear-gradient(180deg,rgba(212,176,100,0.6),transparent);
+  margin:66px auto 0;opacity:0;animation:rise 1s 1.7s ease forwards}
+
+.scroll-cue{position:absolute;bottom:36px;left:0;right:0;
+  display:flex;flex-direction:column;align-items:center;gap:10px;
+  font-size:10px;letter-spacing:.32em;text-transform:uppercase;
+  color:rgba(245,239,227,0.36);opacity:0;
+  animation:rise .8s 2s ease forwards}
+.scroll-cue span{padding-left:.32em;display:inline-block}
+.scroll-cue svg{opacity:.55;animation:bob 2.4s ease-in-out infinite 2.5s}
+
+/* Spacer that provides scroll room for the fixed viewer */
+.scrub-space{height:100vh;height:calc(var(--vh) * 100);height:100svh;position:relative;z-index:0}
+
+/* Fixed cinematic viewer — always in place, opacity driven by scroll */
+.viewer{position:fixed;inset:0;height:100vh;height:calc(var(--vh) * 100);height:100dvh;z-index:40;pointer-events:none;
+  opacity:0;will-change:opacity;background:#0A0906;overflow:hidden;transform:translateZ(0);-webkit-transform:translateZ(0)}
+.viewer-canvas{position:absolute;inset:0;width:100%;height:100%;display:block;background:transparent;z-index:2}
+/* Very subtle vignette */
+.viewer::after{content:'';position:absolute;inset:0;pointer-events:none;z-index:3;
+  background:radial-gradient(140% 95% at 50% 55%, transparent 70%, rgba(10,9,6,0.35) 100%);}
+
+/* Ending overlay — Chelo's signature over the last frame */
+.ending{position:absolute;inset:0;z-index:4;pointer-events:none;
+  display:flex;flex-direction:column;justify-content:flex-end;align-items:center;
+  padding:0 32px 12vh;text-align:center;
+  opacity:0;transition:opacity .55s ease;
+  background:linear-gradient(180deg, transparent 45%, rgba(10,9,6,0.6) 78%, rgba(10,9,6,0.94) 100%);}
+.ending.in{opacity:1}
+.ending .sig-rule{width:96px;height:1px;background:linear-gradient(90deg,transparent,rgba(212,176,100,0.9),transparent);margin:0 auto 26px;
+  transform:scaleX(0);transform-origin:center;transition:transform .8s .1s cubic-bezier(.16,1,.3,1)}
+.ending.in .sig-rule{transform:scaleX(1)}
+.ending .sig-mark{font-family:var(--serif);font-style:italic;font-weight:300;font-size:clamp(22px,3vw,32px);color:#F5EFE3;letter-spacing:.01em;margin-bottom:10px;text-shadow:0 2px 16px rgba(0,0,0,0.7);
+  transform:translateY(10px);transition:transform .8s .2s cubic-bezier(.16,1,.3,1)}
+.ending.in .sig-mark{transform:none}
+.ending .sig-name{font-family:var(--serif);font-style:italic;font-weight:400;font-size:clamp(28px,4.4vw,44px);color:var(--gold);letter-spacing:.005em;text-shadow:0 2px 18px rgba(0,0,0,0.8);
+  transform:translateY(10px);transition:transform .8s .3s cubic-bezier(.16,1,.3,1)}
+.ending.in .sig-name{transform:none}
+
+/* Loading overlay */
+.viewer-loading{position:absolute;inset:0;display:flex;flex-direction:column;align-items:center;justify-content:center;
+  z-index:5;color:rgba(245,239,227,0.7);font-size:10px;letter-spacing:.36em;text-transform:uppercase;
+  transition:opacity .7s ease;pointer-events:none;gap:22px;background:rgba(10,9,6,0.7);backdrop-filter:blur(6px)}
+.viewer-loading.hide{opacity:0}
+.loading-bar{width:180px;height:2px;background:rgba(255,255,255,0.08);overflow:hidden;border-radius:2px}
+.loading-fill{width:100%;height:100%;background:linear-gradient(90deg,var(--gold),#F0D48A);
+  transform:scaleX(0);transform-origin:left;transition:transform .18s ease;
+  box-shadow:0 0 12px var(--gold-glow)}
+
+/* Animations */
+@keyframes reveal{to{opacity:1;transform:translateY(0);filter:blur(0)}}
+@keyframes rise{to{opacity:1;transform:translateY(0)}}
+@keyframes bob{0%,100%{transform:translateY(0)}50%{transform:translateY(6px)}}
+
+@media (max-width:720px){
+  .leyenda{padding:60px 22px 90px}
+  .eyebrow{font-size:10px;letter-spacing:.32em;margin-bottom:44px;gap:10px}
+  .eyebrow::before,.eyebrow::after{width:24px}
+  .l2{margin-top:34px}
+  .divider{margin-top:48px;height:44px}
+  .ending{padding:0 22px 10vh}
+}
+@media (prefers-reduced-motion:reduce){
+  .line,.eyebrow,.divider,.scroll-cue{animation:none;opacity:1;transform:none;filter:none}
+  .scroll-cue svg{animation:none}
+}
+</style>
+</head>
+<body>
+<div class="bg-ambient"></div>
+
+<main class="stage">
+  <section class="leyenda" id="leyenda">
+    <div class="eyebrow">Para Rodrigo</div>
+    <p class="line l1">Hasta la cima, <em>siempre amigo.</em></p>
+    <p class="line l2">Por cada paso, por cada cumbre — y por la siguiente.</p>
+    <div class="divider"></div>
+    <div class="scroll-cue" aria-hidden="true">
+      <span>Desliza</span>
+      <svg width="14" height="20" viewBox="0 0 14 20" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round">
+        <path d="M7 4v12M2 11l5 5 5-5"/>
+      </svg>
+    </div>
+  </section>
+
+  <div class="scrub-space" aria-hidden="true"></div>
+</main>
+
+<div class="viewer" id="viewer" aria-hidden="true">
+  <canvas class="viewer-canvas" id="canvas"></canvas>
+  <div class="ending" id="ending">
+    <div class="sig-rule"></div>
+    <p class="sig-mark">Te quiere,</p>
+    <p class="sig-name">Chelo</p>
+  </div>
+  <div class="viewer-loading" id="loading">
+    <div class="loading-bar"><div class="loading-fill" id="fill"></div></div>
+    <span>Preparando</span>
+  </div>
+</div>
+
+<script>
+(function(){
+  const FRAMES = 289;
+  const isMobile = window.matchMedia('(max-width:720px)').matches;
+  const pad = (n) => String(n).padStart(4, '0');
+  const framePath = (i) => '/frames/f_' + pad(i + 1) + '.webp';
+
+  const canvas  = document.getElementById('canvas');
+  const ctx     = canvas.getContext('2d', { alpha:false, desynchronized:true });
+  ctx.imageSmoothingEnabled = true;
+  ctx.imageSmoothingQuality = 'high';
+  const leyenda = document.getElementById('leyenda');
+  const viewer  = document.getElementById('viewer');
+  const loading = document.getElementById('loading');
+  const fill    = document.getElementById('fill');
+  const ending  = document.getElementById('ending');
+
+  // iOS-safe viewport height
+  function setVH(){
+    const h = (window.visualViewport && window.visualViewport.height) || window.innerHeight;
+    document.documentElement.style.setProperty('--vh', (h / 100) + 'px');
+  }
+  setVH();
+  window.addEventListener('resize', setVH);
+  window.addEventListener('orientationchange', setVH);
+  if (window.visualViewport) window.visualViewport.addEventListener('resize', setVH);
+
+  const images = new Array(FRAMES);
+  let loaded = 0;
+  let readyToShow = false;
+  let target = 0, current = 0, raf = 0;
+
+  function sizeCanvas(){
+    const dpr = Math.min(window.devicePixelRatio || 1, isMobile ? 2.5 : 2);
+    const w = window.innerWidth;
+    const h = (window.visualViewport && window.visualViewport.height) || window.innerHeight;
+    canvas.style.width = w + 'px';
+    canvas.style.height = h + 'px';
+    canvas.width  = Math.floor(w * dpr);
+    canvas.height = Math.floor(h * dpr);
+    ctx.imageSmoothingEnabled = true;
+    ctx.imageSmoothingQuality = 'high';
+  }
+
+  function drawFrame(idxFloat){
+    const idx = Math.max(0, Math.min(FRAMES - 1, Math.round(idxFloat)));
+    const img = images[idx];
+    if (!img || !img.complete || !img.naturalWidth) return;
+    const cw = canvas.width, ch = canvas.height;
+    const iw = img.naturalWidth, ih = img.naturalHeight;
+    // Portrait video (9:16) on portrait viewport → cover fills phone
+    // Landscape viewport → contain (letterbox on sides) so full frame is visible
+    const viewportPortrait = ch >= cw;
+    const s = viewportPortrait ? Math.max(cw / iw, ch / ih) : Math.min(cw / iw, ch / ih);
+    const dw = iw * s, dh = ih * s;
+    const dx = (cw - dw) / 2, dy = (ch - dh) / 2;
+    ctx.fillStyle = '#0A0906';
+    ctx.fillRect(0, 0, cw, ch);
+    ctx.drawImage(img, dx, dy, dw, dh);
+
+    // Mobile portrait: soften top/bottom edges into site bg
+    if (viewportPortrait && isMobile){
+      const fade = Math.round(dh * 0.16);
+      const gTop = ctx.createLinearGradient(0, dy, 0, dy + fade);
+      gTop.addColorStop(0,   '#0A0906');
+      gTop.addColorStop(0.4, 'rgba(10,9,6,0.75)');
+      gTop.addColorStop(1,   'rgba(10,9,6,0)');
+      ctx.fillStyle = gTop;
+      ctx.fillRect(dx, dy, dw, fade);
+      const gBot = ctx.createLinearGradient(0, dy + dh - fade, 0, dy + dh);
+      gBot.addColorStop(0,   'rgba(10,9,6,0)');
+      gBot.addColorStop(0.6, 'rgba(10,9,6,0.75)');
+      gBot.addColorStop(1,   '#0A0906');
+      ctx.fillStyle = gBot;
+      ctx.fillRect(dx, dy + dh - fade, dw, fade);
+    }
+  }
+
+  function preload(){
+    let next = 0;
+    const CONCURRENT = isMobile ? 4 : 8;
+    function loadNext(){
+      if (next >= FRAMES) return;
+      const i = next++;
+      const img = new Image();
+      images[i] = img;
+      img.onload = img.onerror = () => {
+        loaded++;
+        fill.style.transform = 'scaleX(' + (loaded / FRAMES) + ')';
+        if (i === 0){ drawFrame(0); }
+        if (loaded >= Math.min(20, FRAMES) && !readyToShow){
+          readyToShow = true;
+          loading.classList.add('hide');
+          setTimeout(() => { loading.style.display = 'none'; }, 800);
+        }
+        loadNext();
+      };
+      img.decoding = 'async';
+      img.src = framePath(i);
+    }
+    for (let k = 0; k < CONCURRENT; k++) loadNext();
+  }
+
+  function tick(){
+    raf = 0;
+    const y = window.scrollY || window.pageYOffset || 0;
+    const vh = window.innerHeight;
+    const maxScroll = Math.max(1, (document.documentElement.scrollHeight || document.body.scrollHeight) - vh);
+
+    // Crossfade — faster on mobile
+    const fadeEnd = vh * (isMobile ? 0.25 : 0.40);
+    const alpha = Math.max(0, Math.min(1, y / fadeEnd));
+    viewer.style.opacity = alpha;
+    leyenda.style.opacity = 1 - alpha * 0.9;
+    viewer.style.pointerEvents = alpha > 0.5 ? 'auto' : 'none';
+
+    // Scrub — snappy on mobile
+    const scrubStart = vh * (isMobile ? 0.05 : 0.15);
+    const scrubEnd   = maxScroll;
+    const p = Math.max(0, Math.min(1, (y - scrubStart) / Math.max(1, (scrubEnd - scrubStart))));
+
+    target = p * (FRAMES - 1);
+    current += (target - current) * (isMobile ? 0.55 : 0.32);
+    if (Math.abs(target - current) < 0.2) current = target;
+    drawFrame(current);
+
+    if (p > 0.78) ending.classList.add('in');
+    else ending.classList.remove('in');
+
+    if (Math.abs(target - current) > 0.05){
+      raf = requestAnimationFrame(tick);
+    }
+  }
+  function onScroll(){ if (!raf) raf = requestAnimationFrame(tick); }
+
+  window.addEventListener('scroll', onScroll, { passive:true });
+  const onResize = () => { sizeCanvas(); drawFrame(current); onScroll(); };
+  window.addEventListener('resize', onResize);
+  window.addEventListener('orientationchange', () => setTimeout(onResize, 250));
+  if (window.visualViewport) window.visualViewport.addEventListener('resize', onResize);
+
+  sizeCanvas();
+  preload();
+  setTimeout(onScroll, 200);
+})();
+</script>
+</body>
+</html>
