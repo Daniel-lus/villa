@@ -11,6 +11,7 @@
 <meta property="og:description" content="Para Rodrigo Villanueva — te quiere, Chelo.">
 <meta property="og:type" content="website">
 
+<link rel="preload" as="image" href="/hero.webp" type="image/webp" fetchpriority="high">
 <link rel="preload" as="image" href="/frames/f_0001.webp" type="image/webp" fetchpriority="high">
 <link rel="preload" as="image" href="/frames/f_0289.webp" type="image/webp">
 <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -52,20 +53,25 @@ img{display:block;max-width:100%}
   display:flex;flex-direction:column;justify-content:center;align-items:center;
   padding:80px 32px 120px;text-align:center;position:relative;will-change:opacity}
 
+.hero-fig{width:auto;height:clamp(200px,28vh,280px);margin:0 auto 34px;
+  opacity:0;transform:translateY(-6px) scale(.96);
+  animation:rise-scale 1.2s .1s cubic-bezier(.16,1,.3,1) forwards;
+  filter:drop-shadow(0 30px 40px rgba(0,0,0,0.55)) drop-shadow(0 0 30px rgba(212,176,100,0.18))}
+
 .eyebrow{font-size:11px;letter-spacing:.4em;text-transform:uppercase;
   color:var(--gold);opacity:0;transform:translateY(10px);
-  animation:rise 1s .3s ease forwards;margin-bottom:56px;
+  animation:rise 1s .55s ease forwards;margin-bottom:56px;
   display:inline-flex;align-items:center;gap:16px}
 .eyebrow::before,.eyebrow::after{content:'';display:block;width:34px;height:1px;background:linear-gradient(90deg,transparent,rgba(212,176,100,0.7),transparent)}
 
 .line{max-width:22ch;margin:0 auto;opacity:0;transform:translateY(28px);filter:blur(8px);
   animation:reveal 1.4s cubic-bezier(.16,1,.3,1) forwards}
-.l1{font-family:var(--serif);font-weight:300;font-size:clamp(32px,5.2vw,66px);line-height:1.15;letter-spacing:-.005em;color:#F5EFE3;animation-delay:.55s}
+.l1{font-family:var(--serif);font-weight:300;font-size:clamp(32px,5.2vw,66px);line-height:1.15;letter-spacing:-.005em;color:#F5EFE3;animation-delay:.85s}
 .l1 em{font-style:italic;color:var(--gold);text-shadow:0 0 42px var(--gold-glow)}
 .l2{margin-top:44px;font-family:var(--serif);font-style:italic;font-weight:300;font-size:clamp(20px,2.6vw,30px);color:rgba(245,239,227,0.82);max-width:34ch;animation-delay:1.15s}
 
 .divider{width:1px;height:56px;background:linear-gradient(180deg,rgba(212,176,100,0.6),transparent);
-  margin:66px auto 0;opacity:0;animation:rise 1s 1.7s ease forwards}
+  margin:66px auto 0;opacity:0;animation:rise 1s 1.9s ease forwards}
 
 .scroll-cue{position:absolute;bottom:14vh;left:0;right:0;
   display:flex;flex-direction:column;align-items:center;gap:10px;
@@ -116,18 +122,19 @@ img{display:block;max-width:100%}
 /* Animations */
 @keyframes reveal{to{opacity:1;transform:translateY(0);filter:blur(0)}}
 @keyframes rise{to{opacity:1;transform:translateY(0)}}
+@keyframes rise-scale{to{opacity:1;transform:translateY(0) scale(1)}}
 @keyframes bob{0%,100%{transform:translateY(0)}50%{transform:translateY(6px)}}
 
 @media (max-width:720px){
   .leyenda{padding:60px 22px 90px}
-  .eyebrow{font-size:10px;letter-spacing:.32em;margin-bottom:44px;gap:10px}
+  .hero-fig{height:clamp(170px,24vh,230px);margin-bottom:28px}
+  .eyebrow{font-size:10px;letter-spacing:.32em;margin-bottom:38px;gap:10px}
   .eyebrow::before,.eyebrow::after{width:24px}
-  .l2{margin-top:34px}
   .divider{margin-top:48px;height:44px}
   .ending{padding:0 22px 10vh}
 }
 @media (prefers-reduced-motion:reduce){
-  .line,.eyebrow,.divider,.scroll-cue{animation:none;opacity:1;transform:none;filter:none}
+  .line,.eyebrow,.divider,.scroll-cue,.hero-fig{animation:none;opacity:1;transform:none;filter:none}
   .scroll-cue svg{animation:none}
 }
 </style>
@@ -137,7 +144,8 @@ img{display:block;max-width:100%}
 
 <main class="stage">
   <section class="leyenda" id="leyenda">
-    <div class="eyebrow">Para Rodrigo</div>
+    <img class="hero-fig" src="/hero.webp" alt="Alpinista con casco 'villa' y chamarra amarilla" width="800" height="1067">
+    <div class="eyebrow">Para Villa</div>
     <p class="line l1">Hasta la cima, <em>siempre amigo.</em></p>
     <div class="divider"></div>
     <div class="scroll-cue" aria-hidden="true">
