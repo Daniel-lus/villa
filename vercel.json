@@ -1,7 +1,7 @@
 {
   "headers": [
     {
-      "source": "/frames/(.*)",
+      "source": "/frames-v2/(.*)",
       "headers": [{ "key": "Cache-Control", "value": "public, max-age=31536000, immutable" }]
     }
   ]

@@ -12,8 +12,8 @@
 <meta property="og:type" content="website">
 
 <link rel="preload" as="image" href="/hero-v3.webp" type="image/webp" fetchpriority="high">
-<link rel="preload" as="image" href="/frames/f_0001.webp" type="image/webp" fetchpriority="high">
-<link rel="preload" as="image" href="/frames/f_0289.webp" type="image/webp">
+<link rel="preload" as="image" href="/frames-v2/f_0001.webp" type="image/webp" fetchpriority="high">
+<link rel="preload" as="image" href="/frames-v2/f_0289.webp" type="image/webp">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;1,300;1,400&display=swap" rel="stylesheet">
@@ -177,7 +177,7 @@ img{display:block;max-width:100%}
   const FRAMES = 289;
   const isMobile = window.matchMedia('(max-width:720px)').matches;
   const pad = (n) => String(n).padStart(4, '0');
-  const framePath = (i) => '/frames/f_' + pad(i + 1) + '.webp';
+  const framePath = (i) => '/frames-v2/f_' + pad(i + 1) + '.webp';
 
   const canvas  = document.getElementById('canvas');
   const ctx     = canvas.getContext('2d', { alpha:false, desynchronized:true });
